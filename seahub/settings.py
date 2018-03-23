@@ -439,10 +439,10 @@ def genpassword():
 INIT_PASSWD = genpassword
 
 # browser tab title
-SITE_TITLE = 'Private Seafile'
+SITE_TITLE = 'SkyFile'
 
 # Base name used in email sending
-SITE_NAME = 'Seafile'
+SITE_NAME = 'SkyFile'
 
 # Path to the license file(relative to the media path)
 LICENSE_PATH = os.path.join(PROJECT_ROOT, '../../seafile-license.txt')
