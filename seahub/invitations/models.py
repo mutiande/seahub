@@ -5,13 +5,13 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import ugettext as _
+from constance import config 
 
 from seahub.base.fields import LowerCaseCharField
 from seahub.invitations.settings import INVITATIONS_TOKEN_AGE
 from seahub.utils import gen_token
 from seahub.utils.timeutils import datetime_to_isoformat_timestr
 from seahub.utils.mail import send_html_email_with_dj_template, MAIL_PRIORITY
-from seahub.settings import SITE_NAME
 
 GUEST = _('Guest')
 
@@ -84,12 +84,12 @@ class Invitation(models.Model):
             email = self.accepter
 
         context = self.to_dict()
-        context['site_name'] = SITE_NAME
+        context['site_name'] = config.SITE_NAME
 
         # subject = render_to_string('invitations/invitation_email_subject.txt',
         #                            context).rstrip()
         subject = _('%(user)s invited you to join %(site_name)s.') % {
-            'user': self.inviter, 'site_name': SITE_NAME}
+            'user': self.inviter, 'site_name': config.SITE_NAME}
         send_html_email_with_dj_template(
             email, dj_template='invitations/invitation_email.html',
             context=context,

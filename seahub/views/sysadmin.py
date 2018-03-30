@@ -21,6 +21,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.utils.http import urlquote
+from constance import config
 
 import seaserv
 from seaserv import ccnet_threaded_rpc, seafserv_threaded_rpc, \
@@ -70,7 +71,7 @@ from seahub.share.models import FileShare, UploadLinkShare
 from seahub.admin_log.signals import admin_operation
 from seahub.admin_log.models import USER_DELETE, USER_ADD
 import seahub.settings as settings
-from seahub.settings import INIT_PASSWD, SITE_NAME, SITE_ROOT, \
+from seahub.settings import INIT_PASSWD, SITE_ROOT, \
     SEND_EMAIL_ON_ADDING_SYSTEM_MEMBER, SEND_EMAIL_ON_RESETTING_USER_PASSWD, \
     ENABLE_SYS_ADMIN_VIEW_REPO, ENABLE_GUEST_INVITATION, \
     ENABLE_LIMIT_IPADDRESS
@@ -933,7 +934,7 @@ def email_user_on_activation(user):
     c = {
         'username': user.email,
         }
-    send_html_email(_(u'Your account on %s is activated') % SITE_NAME,
+    send_html_email(_(u'Your account on %s is activated') % config.SITE_NAME,
             'sysadmin/user_activation_email.html', c, None, [user.email])
 
 @login_required_ajax
@@ -1016,7 +1017,7 @@ def send_user_reset_email(request, email, password):
         'email': email,
         'password': password,
         }
-    send_html_email(_(u'Password has been reset on %s') % SITE_NAME,
+    send_html_email(_(u'Password has been reset on %s') % config.SITE_NAME,
             'sysadmin/user_reset_email.html', c, None, [email])
 
 @login_required
@@ -1072,7 +1073,7 @@ def send_user_add_mail(request, email, password):
         'email': email,
         'password': password,
         }
-    send_html_email(_(u'You are invited to join %s') % SITE_NAME,
+    send_html_email(_(u'You are invited to join %s') % config.SITE_NAME,
             'sysadmin/user_add_email.html', c, None, [email])
 
 @login_required_ajax
@@ -1992,7 +1993,7 @@ def batch_add_user(request):
 
                 send_html_email_with_dj_template(
                     username, dj_template='sysadmin/user_batch_add_email.html',
-                    subject=_(u'You are invited to join %s') % SITE_NAME,
+                    subject=_(u'You are invited to join %s') % config.SITE_NAME,
                     context={
                         'user': email2nickname(request.user.username),
                         'email': username,
@@ -2076,7 +2077,8 @@ def sys_settings(request):
         'ENABLE_SHARE_TO_ALL_GROUPS', 'ENABLE_TWO_FACTOR_AUTH'
     ]
 
-    STRING_WEB_SETTINGS = ('SERVICE_URL', 'FILE_SERVER_ROOT', 'TEXT_PREVIEW_EXT')
+    STRING_WEB_SETTINGS = ('SERVICE_URL', 'FILE_SERVER_ROOT', 'TEXT_PREVIEW_EXT',
+                           'SITE_NAME', 'SITE_TITLE')
 
     if request.is_ajax() and request.method == "POST":
         content_type = 'application/json; charset=utf-8'

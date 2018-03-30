@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.utils.html import escape
 from django.utils import translation
 from django.utils.translation import ugettext as _
+from constance import config
 
 from seaserv import seafile_api, ccnet_api
 from seahub.base.models import CommandsLastCheck
@@ -27,7 +28,7 @@ from seahub.constants import HASH_URLS
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-subject = _('New notice on %s') % settings.SITE_NAME
+subject = _('New notice on %s') % config.SITE_NAME
 
 class Command(BaseCommand):
     help = 'Send Email notifications to user if he/she has an unread notices every period of seconds .'
@@ -291,7 +292,7 @@ class Command(BaseCommand):
                 }
 
             try:
-                send_html_email(_('New notice on %s') % settings.SITE_NAME,
+                send_html_email(_('New notice on %s') % config.SITE_NAME,
                                 'notifications/notice_email.html', c,
                                 None, [to_user])
 

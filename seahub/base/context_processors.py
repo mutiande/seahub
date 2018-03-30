@@ -82,7 +82,7 @@ def base(request):
 
     result = {
         'seafile_version': SEAFILE_VERSION,
-        'site_title': SITE_TITLE,
+        'site_title': config.SITE_TITLE,
         'branding_css': BRANDING_CSS,
         'favicon_path': favicon_path,
         'logo_path': logo_path,
@@ -91,7 +91,7 @@ def base(request):
         'seacloud_mode': SEACLOUD_MODE,
         'cloud_mode': request.cloud_mode,
         'org': org,
-        'site_name': SITE_NAME,
+        'site_name': config.SITE_NAME,
         'enable_signup': config.ENABLE_SIGNUP,
         'max_file_name': MAX_FILE_NAME,
         'has_file_search': HAS_FILE_SEARCH,

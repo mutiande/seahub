@@ -22,6 +22,19 @@
         {% include "snippets/web_settings_form.html" %}
     {% endwith %}
 
+    <h4>Tab title</h4>
+
+    {% with type="input" setting_display_name="SITE_TITLE" setting_name="SITE_TITLE" setting_val=config_dict.SITE_TITLE %}
+        {% trans "Browser tab title, like Private Seafile" as help_tip %}
+        {% include "snippets/web_settings_form.html" %}
+    {% endwith %}
+    
+    <h4>Email</h4>
+
+    {% with type="input" setting_display_name="SITE_NAME" setting_name="SITE_NAME" setting_val=config_dict.SITE_NAME %}
+        {% trans "Base name used in email sending, like Seafile" as help_tip %}
+        {% include "snippets/web_settings_form.html" %}
+    {% endwith %}
 
     <h4>Logo</h4>
 

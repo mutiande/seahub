@@ -8,11 +8,11 @@ from django.core.management.base import BaseCommand
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.translation import ugettext as _
+from constance import config
 import seaserv
 from seaserv import seafile_api
 
 from seahub.profile.models import Profile
-import seahub.settings as settings
 from seahub.utils.mail import send_html_email_with_dj_template, MAIL_PRIORITY
 
 # Get an instance of a logger
@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
             send_html_email_with_dj_template(
                 u.email, dj_template='notifications/notify_virus.html',
-                subject=_('Virus detected on %s') % settings.SITE_NAME,
+                subject=_('Virus detected on %s') % config.SITE_NAME,
                 priority=MAIL_PRIORITY.now
             )
 
@@ -70,7 +70,7 @@ class Command(BaseCommand):
         for mail in notify_list:
             send_html_email_with_dj_template(
                 mail, dj_template='notifications/notify_virus.html',
-                subject=_('Virus detected on %s') % settings.SITE_NAME,
+                subject=_('Virus detected on %s') % config.SITE_NAME,
                 priority=MAIL_PRIORITY.now
             )
 
@@ -95,7 +95,7 @@ class Command(BaseCommand):
                                          args=[repo_id, file_path]),
                      'file_name': os.path.basename(file_path),
                  },
-            subject=_('Virus detected on %s') % settings.SITE_NAME,
+            subject=_('Virus detected on %s') % config.SITE_NAME,
             priority=MAIL_PRIORITY.now
         )
 
